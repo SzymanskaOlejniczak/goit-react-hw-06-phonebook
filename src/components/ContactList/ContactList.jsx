@@ -1,5 +1,6 @@
 import { deleteContact } from "../../redux/slice";
 import { useSelector, useDispatch } from "react-redux";
+import { FcEmptyTrash} from 'react-icons/fc';
 import style from './ContactList.module.css';
 
 export const ContactList = () => {
@@ -21,7 +22,7 @@ export const ContactList = () => {
             type="button"
             onClick={() => deleteContacts(id)}
           >
-            <span>Delete</span> 
+            <span>Delete</span> <FcEmptyTrash />
           </button>
         </li>
       ))}
