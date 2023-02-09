@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { nanoid } from "nanoid";
 import { addContact } from "../../redux/slice";
 import { useDispatch } from "react-redux";
+import { FcContacts } from 'react-icons/fc';
 import style from './ContactForm.module.css';
 
 export const ContactForm = () => {
@@ -77,7 +78,7 @@ export const ContactForm = () => {
           type="submit"
           disabled={!name && !number}
         >
-          <span>Add contact</span> 
+          <span>Add contact</span> <FcContacts />
         </button>
       </form>
     );
