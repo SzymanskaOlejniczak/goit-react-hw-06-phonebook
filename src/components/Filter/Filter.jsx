@@ -1,13 +1,13 @@
-import { filterContact } from "../../redux/slice";
-import { useSelector, useDispatch } from "react-redux";
+import { filterContacts } from "../../redux/actions";
+import {  useDispatch } from "react-redux";
 import style from './Filter.module.css';
 
 export const Filter = () => {
-  const filter = useSelector(state => state.contactsReducer.filter);
   const dispatch = useDispatch(); 
 
-  const changeFilter = data => {
-      dispatch(filterContact(data));
+  const changeFilter = e => {
+    const value =  e.target.value.toLowerCase() 
+    dispatch(filterContacts(value));
   };
   return (
     <label className={style.label}>
@@ -18,8 +18,7 @@ export const Filter = () => {
         name="name"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Enter name" 
-        value={filter} 
-        onChange={e => changeFilter(e.target.value)} />
+        onChange={changeFilter} />
     </label>
   )
 };
