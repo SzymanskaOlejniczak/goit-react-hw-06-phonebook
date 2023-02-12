@@ -1,18 +1,25 @@
-import { deleteContact } from "../../redux/slice";
+import { deleteContacts } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { getFilterValue, getContacts } from 'redux/selectors';
 import { FcEmptyTrash} from 'react-icons/fc';
 import style from './ContactList.module.css';
 
 export const ContactList = () => {
-  const contacts = useSelector(state => state.contactsReducer.items.filter(contact => contact.name.toLowerCase().includes(state.contactsReducer.filter)));
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilterValue);
   const dispatch = useDispatch();
+  const filteredContacts = contacts.filter(
+    contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase()) ||
+      contact.number.replace(/-|\s/g, '').includes(filter.replace(/-|\s/g, ''))
+  );
 
-  const deleteContacts = data => {
-        dispatch(deleteContact(data));
+  const deleteContact = data => {
+        dispatch(deleteContacts(data));
     };
     return (
     <ul className={style.list}>
-      {contacts.map(({ id, name, number }) => (
+      {filteredContacts.map(({ id, name, number }) => (
         <li className={style.contact} 
           key={id}>
           <p>{name}:</p>
@@ -20,7 +27,7 @@ export const ContactList = () => {
           <button
             className={style.btn}
             type="button"
-            onClick={() => deleteContacts(id)}
+            onClick={() => deleteContact(id)}
           >
             <span>Delete</span> <FcEmptyTrash />
           </button>
